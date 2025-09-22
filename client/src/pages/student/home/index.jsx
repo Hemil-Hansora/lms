@@ -1,6 +1,7 @@
 import { courseCategories } from "@/config";
 import banner from "../../../../public/banner-img.png";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useContext, useEffect } from "react";
 import { StudentContext } from "@/context/student-context";
 import {
@@ -12,8 +13,12 @@ import { useNavigate } from "react-router-dom";
 import { Star, Clock, Users, ArrowRight, BookOpen, Zap } from "lucide-react";
 
 function StudentHomePage() {
-  const { studentViewCoursesList, setStudentViewCoursesList } =
-    useContext(StudentContext);
+  const { 
+    studentViewCoursesList, 
+    setStudentViewCoursesList,
+    coursesLoading,
+    setCoursesLoading 
+  } = useContext(StudentContext);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -30,8 +35,15 @@ function StudentHomePage() {
   }
 
   async function fetchAllStudentViewCourses() {
-    const response = await fetchStudentViewCourseListService();
-    if (response?.success) setStudentViewCoursesList(response?.data);
+    setCoursesLoading(true);
+    try {
+      const response = await fetchStudentViewCourseListService();
+      if (response?.success) setStudentViewCoursesList(response?.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setCoursesLoading(false);
+    }
   }
 
   async function handleCourseNavigate(getCurrentCourseId) {
@@ -149,7 +161,22 @@ function StudentHomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
+            {coursesLoading ? (
+              // Loading skeleton
+              Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-pulse">
+                  <div className="h-48 bg-slate-200"></div>
+                  <div className="p-6 space-y-4">
+                    <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                    <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+                    <div className="flex justify-between items-center">
+                      <div className="h-3 bg-slate-200 rounded w-1/3"></div>
+                      <div className="h-4 bg-slate-200 rounded w-1/4"></div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : studentViewCoursesList && studentViewCoursesList.length > 0 ? (
               studentViewCoursesList.slice(0, 8).map((courseItem) => (
                 <div
                   key={courseItem._id}

@@ -1,4 +1,5 @@
 import { Button } from "../ui/button";
+import { ButtonLoader } from "../ui/loading-spinner";
 import FormControls from "./form-controls";
 
 function CommonForm({
@@ -8,6 +9,7 @@ function CommonForm({
   formData,
   setFormData,
   isButtonDisabled = false,
+  loading = false,
 }) {
   return (
     <form onSubmit={handleSubmit}>
@@ -17,8 +19,13 @@ function CommonForm({
         formData={formData}
         setFormData={setFormData}
       />
-      <Button disabled={isButtonDisabled} type="submit" className="mt-5 w-full">
-        {buttonText || "Submit"}
+      <Button 
+        disabled={isButtonDisabled || loading} 
+        type="submit" 
+        className="mt-5 w-full flex items-center justify-center space-x-2"
+      >
+        {loading && <ButtonLoader />}
+        <span>{loading ? "Please wait..." : (buttonText || "Submit")}</span>
       </Button>
     </form>
   );

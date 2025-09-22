@@ -27,8 +27,10 @@ function StudentViewCourseDetailsPage() {
     setStudentViewCourseDetails,
     currentCourseDetailsId,
     setCurrentCourseDetailsId,
-    loadingState,
-    setLoadingState,
+    courseDetailsLoading,
+    setCourseDetailsLoading,
+    orderLoading,
+    setOrderLoading,
   } = useContext(StudentContext);
 
   const { auth } = useContext(AuthContext);
@@ -36,22 +38,27 @@ function StudentViewCourseDetailsPage() {
   const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview] =
     useState(null);
   const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
 
   async function fetchStudentViewCourseDetails() {
-    const response = await fetchStudentViewCourseDetailsService(
-      currentCourseDetailsId
-    );
+    setCourseDetailsLoading(true);
+    try {
+      const response = await fetchStudentViewCourseDetailsService(
+        currentCourseDetailsId
+      );
 
-    if (response?.success) {
-      setStudentViewCourseDetails(response?.data);
-      setLoadingState(false);
-    } else {
+      if (response?.success) {
+        setStudentViewCourseDetails(response?.data);
+      } else {
+        setStudentViewCourseDetails(null);
+      }
+    } catch (error) {
+      console.error("Error fetching course details:", error);
       setStudentViewCourseDetails(null);
-      setLoadingState(false);
+    } finally {
+      setCourseDetailsLoading(false);
     }
   }
 
@@ -61,7 +68,7 @@ function StudentViewCourseDetailsPage() {
   }
 
   async function handleCreateOrder() {
-    setIsProcessingPayment(true);
+    setOrderLoading(true);
     
     const orderPayload = {
       userId: auth?.user?._id,
@@ -91,7 +98,8 @@ function StudentViewCourseDetailsPage() {
       }
     } catch (error) {
       console.error("Order creation failed:", error);
-      setIsProcessingPayment(false);
+    } finally {
+      setOrderLoading(false);
     }
   }
 
@@ -114,9 +122,9 @@ function StudentViewCourseDetailsPage() {
     }
   }, [location.pathname]);
 
-  if (loadingState) return <Skeleton />;
+  if (courseDetailsLoading) return <Skeleton />;
 
-  if (isProcessingPayment) {
+  if (orderLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <Card className="w-96 border-0 shadow-xl">
@@ -363,10 +371,10 @@ function StudentViewCourseDetailsPage() {
                     
                     <Button 
                       onClick={handleCreateOrder}
-                      disabled={isProcessingPayment}
+                      disabled={orderLoading}
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
                     >
-                      {isProcessingPayment ? (
+                      {orderLoading ? (
                         "Processing..."
                       ) : (
                         <>

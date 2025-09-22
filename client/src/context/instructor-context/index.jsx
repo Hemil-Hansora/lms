@@ -18,6 +18,7 @@ export default function InstructorProvider({ children }) {
     useState(0);
   const [instructorCoursesList, setInstructorCoursesList] = useState([]);
   const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
+  const [instructorLoading, setInstructorLoading] = useState(false);
 
   return (
     <InstructorContext.Provider
@@ -34,6 +35,8 @@ export default function InstructorProvider({ children }) {
         setInstructorCoursesList,
         currentEditedCourseId,
         setCurrentEditedCourseId,
+        instructorLoading,
+        setInstructorLoading,
       }}
     >
       {children}

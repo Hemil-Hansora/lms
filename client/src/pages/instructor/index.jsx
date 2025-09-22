@@ -2,6 +2,7 @@ import InstructorCourses from "@/components/instructor-view/courses";
 import InstructorDashboard from "@/components/instructor-view/dashboard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { AuthContext } from "@/context/auth-context";
 import { InstructorContext } from "@/context/instructor-context";
 import { fetchInstructorCourseListService } from "@/services";
@@ -11,12 +12,23 @@ import { useContext, useEffect, useState } from "react";
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { resetCredentials } = useContext(AuthContext);
-  const { instructorCoursesList, setInstructorCoursesList } =
-    useContext(InstructorContext);
+  const { 
+    instructorCoursesList, 
+    setInstructorCoursesList,
+    instructorLoading,
+    setInstructorLoading 
+  } = useContext(InstructorContext);
 
   async function fetchAllCourses() {
-    const response = await fetchInstructorCourseListService();
-    if (response?.success) setInstructorCoursesList(response?.data);
+    setInstructorLoading(true);
+    try {
+      const response = await fetchInstructorCourseListService();
+      if (response?.success) setInstructorCoursesList(response?.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setInstructorLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -94,11 +106,17 @@ function InstructorDashboardpage() {
             </p>
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {menuItems.map((menuItem) => (
-              <TabsContent key={menuItem.value} value={menuItem.value}>
-                {menuItem.component !== null ? menuItem.component : null}
-              </TabsContent>
-            ))}
+            {instructorLoading ? (
+              <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl shadow-lg p-12">
+                <LoadingSpinner size="lg" text="Loading courses..." />
+              </div>
+            ) : (
+              menuItems.map((menuItem) => (
+                <TabsContent key={menuItem.value} value={menuItem.value}>
+                  {menuItem.component !== null ? menuItem.component : null}
+                </TabsContent>
+              ))
+            )}
           </Tabs>
         </div>
       </main>

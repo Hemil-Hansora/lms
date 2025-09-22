@@ -11,6 +11,10 @@ export default function StudentProvider({ children }) {
   const [studentBoughtCoursesList, setStudentBoughtCoursesList] = useState([]);
   const [studentCurrentCourseProgress, setStudentCurrentCourseProgress] =
     useState({});
+  const [coursesLoading, setCoursesLoading] = useState(false);
+  const [courseDetailsLoading, setCourseDetailsLoading] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [progressLoading, setProgressLoading] = useState(false);
 
   return (
     <StudentContext.Provider
@@ -27,6 +31,14 @@ export default function StudentProvider({ children }) {
         setStudentBoughtCoursesList,
         studentCurrentCourseProgress,
         setStudentCurrentCourseProgress,
+        coursesLoading,
+        setCoursesLoading,
+        courseDetailsLoading,
+        setCourseDetailsLoading,
+        orderLoading,
+        setOrderLoading,
+        progressLoading,
+        setProgressLoading,
       }}
     >
       {children}
