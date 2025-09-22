@@ -23,8 +23,8 @@ function StudentViewCommonHeader() {
               <div className="p-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg">
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
-              <span className="ml-3 font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                EduNova
+                            <span className="ml-3 font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                EduNexus
               </span>
             </Link>
             
