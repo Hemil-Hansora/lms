@@ -183,7 +183,7 @@ function StudentViewCourseDetailsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Globe className="w-5 h-5" />
-                  <span>{studentViewCourseDetails?.primaryLanguage}</span>
+                  <span>{studentViewCourseDetails?.primaryLanguage || 'Not specified'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
@@ -353,7 +353,7 @@ function StudentViewCourseDetailsPage() {
                       <div className="text-center">
                         <div className="flex items-center justify-center gap-1 mb-1">
                           <Clock className="w-4 h-4 text-purple-500" />
-                          <span className="font-bold text-slate-900">{studentViewCourseDetails?.level}</span>
+                          <span className="font-bold text-slate-900 capitalize">{studentViewCourseDetails?.level || 'Not specified'}</span>
                         </div>
                         <p className="text-sm text-slate-600">Level</p>
                       </div>

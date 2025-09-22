@@ -51,35 +51,36 @@ export const initialSignUpFormData = {
 };
 
 export const languageOptions = [
-  { id: "english", label: "English" },
-  { id: "spanish", label: "Spanish" },
-  { id: "french", label: "French" },
-  { id: "german", label: "German" },
-  { id: "chinese", label: "Chinese" },
-  { id: "japanese", label: "Japanese" },
-  { id: "korean", label: "Korean" },
-  { id: "portuguese", label: "Portuguese" },
-  { id: "arabic", label: "Arabic" },
-  { id: "russian", label: "Russian" },
+  { id: "English", label: "English" },
+  { id: "Spanish", label: "Spanish" },
+  { id: "French", label: "French" },
+  { id: "German", label: "German" },
+  { id: "Chinese", label: "Chinese" },
+  { id: "Japanese", label: "Japanese" },
+  { id: "Korean", label: "Korean" },
+  { id: "Portuguese", label: "Portuguese" },
+  { id: "Arabic", label: "Arabic" },
+  { id: "Russian", label: "Russian" },
 ];
 
 export const courseLevelOptions = [
-  { id: "beginner", label: "Beginner" },
-  { id: "intermediate", label: "Intermediate" },
-  { id: "advanced", label: "Advanced" },
+  { id: "Beginner", label: "Beginner" },
+  { id: "Intermediate", label: "Intermediate" },
+  { id: "Advanced", label: "Advanced" },
 ];
 
 export const courseCategories = [
-  { id: "web-development", label: "Web Development" },
-  { id: "backend-development", label: "Backend Development" },
-  { id: "data-science", label: "Data Science" },
-  { id: "machine-learning", label: "Machine Learning" },
-  { id: "artificial-intelligence", label: "Artificial Intelligence" },
-  { id: "cloud-computing", label: "Cloud Computing" },
-  { id: "cyber-security", label: "Cyber Security" },
-  { id: "mobile-development", label: "Mobile Development" },
-  { id: "game-development", label: "Game Development" },
-  { id: "software-engineering", label: "Software Engineering" },
+  { id: "Web Development", label: "Web Development" },
+  { id: "Backend Development", label: "Backend Development" },
+  { id: "Data Science", label: "Data Science" },
+  { id: "Machine Learning", label: "Machine Learning" },
+  { id: "Artificial Intelligence", label: "Artificial Intelligence" },
+  { id: "Cloud Computing", label: "Cloud Computing" },
+  { id: "Cyber Security", label: "Cyber Security" },
+  { id: "Mobile Development", label: "Mobile Development" },
+  { id: "Game Development", label: "Game Development" },
+  { id: "Software Engineering", label: "Software Engineering" },
+  { id: "Marketing", label: "Marketing" },
 ];
 
 export const courseLandingPageFormControls = [

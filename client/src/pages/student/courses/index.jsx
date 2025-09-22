@@ -174,7 +174,7 @@ function StudentViewCoursesPage() {
                     <div key={keyItem} className="border-b border-slate-100 last:border-b-0">
                       <div className="p-6">
                         <h4 className="font-semibold text-slate-900 mb-4 capitalize">
-                          {keyItem.replace(/([A-Z])/g, ' $1').trim()}
+                          {keyItem === 'primaryLanguage' ? 'Primary Language' : keyItem.replace(/([A-Z])/g, ' $1').trim()}
                         </h4>
                         <div className="space-y-3">
                           {filterOptions[keyItem].map((option) => (
@@ -294,19 +294,25 @@ function StudentViewCoursesPage() {
                                 Created by <span className="font-semibold text-slate-900">{courseItem?.instructorName}</span>
                               </p>
                               
-                              <div className="flex items-center gap-6 text-sm text-slate-500 mb-4">
+                              <div className="flex items-center gap-4 text-sm text-slate-500 mb-4 flex-wrap">
                                 <span className="flex items-center gap-1">
                                   <BookOpen className="w-4 h-4" />
                                   {courseItem?.curriculum?.length || 0} {(courseItem?.curriculum?.length || 0) <= 1 ? 'Lecture' : 'Lectures'}
                                 </span>
                                 <span className="flex items-center gap-1">
                                   <Clock className="w-4 h-4" />
-                                  {courseItem?.level} Level
+                                  {courseItem?.level || 'N/A'} Level
                                 </span>
                                 <span className="flex items-center gap-1">
                                   <Users className="w-4 h-4" />
                                   {courseItem?.students?.length || 0} Students
                                 </span>
+                                {courseItem?.primaryLanguage && (
+                                  <span className="flex items-center gap-1">
+                                    <span className="w-4 h-4 text-center">🌐</span>
+                                    {courseItem?.primaryLanguage}
+                                  </span>
+                                )}
                               </div>
                               
                               <p className="text-slate-600 line-clamp-2 mb-4">
